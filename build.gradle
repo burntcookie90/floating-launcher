@@ -1,27 +1,98 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.30'
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  ext.buildConfig = [
+      'compileSdk': 27,
+      'minSdk': 24,
+      'targetSdk': 27,
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
+      'version': [
+          'major': 1,
+          'minor': 0,
+          'patch': 0,
+          'build': 0,
+      ],
+  ]
+  ext.buildConfig.version['name'] = "${buildConfig.version.major}.${buildConfig.version.minor}.${buildConfig.version.patch}"
+  ext.buildConfig.version['code'] = buildConfig.version.major * 1000000 + buildConfig.version.minor * 10000 + buildConfig.version.patch * 100 + buildConfig.version.build
+
+  ext.versions = [
+      'supportLibrary': '27.1.1',
+      'atsl': '1.0.1',
+      'kotlin': '1.2.40',
+      'kotlinCoroutines': '0.22.5',
+      'dagger': '2.15',
+      'room': '1.0.0'
+  ]
+
+  ext.deps = [
+      'kotlin': [
+          'stdlib': "org.jetbrains.kotlin:kotlin-stdlib-jre7:${versions.kotlin}",
+          'coroutines': [
+              'common': "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${versions.kotlinCoroutines}",
+              'jdk': "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.kotlinCoroutines}",
+              'android': "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.kotlinCoroutines}",
+          ],
+      ],
+      'android': [
+          'arch': [
+              'dbFramework': 'android.arch.persistence:db-framework:1.0.0',
+              'viewModel': 'android.arch.lifecycle:extensions:1.1.1',
+              'room': [
+                  'runtime': "android.arch.persistence.room:runtime:${versions.room}",
+                  'compiler': "android.arch.persistence.room:compiler:${versions.room}"
+              ]
+          ],
+          'support': [
+              'annotations': "com.android.support:support-annotations:${versions.supportLibrary}",
+              'coreUtils': "com.android.support:support-core-utils:${versions.supportLibrary}",
+              'compat': "com.android.support:support-compat:${versions.supportLibrary}",
+              'recyclerView': "com.android.support:recyclerview-v7:${versions.supportLibrary}",
+              'appCompat': "com.android.support:appcompat-v7:${versions.supportLibrary}",
+              'design': "com.android.support:design:${versions.supportLibrary}",
+              'constraintLayout': 'com.android.support.constraint:constraint-layout:1.1.0',
+          ],
+          'x': [
+              'coreKtx': 'androidx.core:core-ktx:0.3',
+          ],
+          'test': [
+              'runner': "com.android.support.test:runner:${versions.atsl}",
+              'rules': "com.android.support.test:rules${versions.atsl}",
+          ],
+      ],
+      'dagger': [
+          'runtime': "com.google.dagger:dagger:${versions.dagger}",
+          'compiler': "com.google.dagger:dagger-compiler:${versions.dagger}",
+          'android': [
+              'support': "com.google.dagger:dagger-android-support:${versions.dagger}",
+              'processor': "com.google.dagger:dagger-android-processor:${versions.dagger}"
+          ]
+      ],
+      'hover': "io.mattcarroll.hover:hover:0.9.8",
+      'timber': 'com.jakewharton.timber:timber:4.7.0'
+  ]
+
+  repositories {
+    google()
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.1.1'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+
+    // NOTE: Do not place your application dependencies here; they belong
+    // in the individual module build.gradle files
+  }
 }
 
 allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
+  repositories {
+    google()
+    jcenter()
+  }
 }
 
 task clean(type: Delete) {
-    delete rootProject.buildDir
+  delete rootProject.buildDir
 }
+
