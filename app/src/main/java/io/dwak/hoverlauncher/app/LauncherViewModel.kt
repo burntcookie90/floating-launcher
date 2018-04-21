@@ -6,10 +6,8 @@ import android.arch.lifecycle.ViewModel
 import io.dwak.hoverlauncher.data.repo.AppInfoRepo
 import io.dwak.hoverlauncher.data.ui.model.UiAppInfo
 import io.dwak.hoverlauncher.util.Mutable
-import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import javax.inject.Inject
-import kotlin.coroutines.experimental.suspendCoroutine
 
 class LauncherViewModel @Inject constructor(private val appInfoRepo: AppInfoRepo) : ViewModel() {
 

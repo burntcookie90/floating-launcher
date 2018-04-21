@@ -1,6 +1,9 @@
 package io.dwak.hoverlauncher.app
 
 import android.content.Context
+import android.widget.ImageView
+import io.dwak.hoverlauncher.R
+import io.mattcarroll.hover.Content
 import io.mattcarroll.hover.HoverMenu
 import javax.inject.Inject
 
@@ -9,7 +12,7 @@ class LauncherMenu(private val context: Context,
                    private val launcherViewModel: LauncherViewModel): HoverMenu() {
 
   override fun getSections(): MutableList<Section> {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    TODO()
   }
 
   override fun getId(): String {
