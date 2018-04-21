@@ -17,22 +17,18 @@ buildscript {
   ext.buildConfig.version['code'] = buildConfig.version.major * 1000000 + buildConfig.version.minor * 10000 + buildConfig.version.patch * 100 + buildConfig.version.build
 
   ext.versions = [
-      'supportLibrary': '27.1.1',
       'atsl': '1.0.1',
+      'dagger': '2.15',
       'kotlin': '1.2.40',
       'kotlinCoroutines': '0.22.5',
-      'dagger': '2.15',
-      'room': '1.0.0'
+      'room': '1.0.0',
+      'supportLibrary': '27.1.1'
   ]
 
   ext.deps = [
-      'kotlin': [
-          'stdlib': "org.jetbrains.kotlin:kotlin-stdlib-jre7:${versions.kotlin}",
-          'coroutines': [
-              'common': "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${versions.kotlinCoroutines}",
-              'jdk': "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.kotlinCoroutines}",
-              'android': "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.kotlinCoroutines}",
-          ],
+      'adapterGenerator': [
+          'annotations': "io.dwak:adapter-generator-annotations:0.1-SNAPSHOT",
+          'processor': "io.dwak:adapter-generator-processor:0.1-SNAPSHOT"
       ],
       'android': [
           'arch': [
@@ -68,6 +64,15 @@ buildscript {
               'processor': "com.google.dagger:dagger-android-processor:${versions.dagger}"
           ]
       ],
+      'kotlin': [
+          'stdlib': "org.jetbrains.kotlin:kotlin-stdlib-jre7:${versions.kotlin}",
+          'coroutines': [
+              'common': "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${versions.kotlinCoroutines}",
+              'jdk': "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.kotlinCoroutines}",
+              'android': "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.kotlinCoroutines}",
+          ],
+      ],
+      'kotterknife': 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT',
       'hover': "io.mattcarroll.hover:hover:0.9.8",
       'timber': 'com.jakewharton.timber:timber:4.7.0'
   ]
@@ -89,6 +94,7 @@ allprojects {
   repositories {
     google()
     jcenter()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
   }
 }
 

@@ -40,6 +40,9 @@ android {
 }
 
 dependencies {
+  implementation deps.adapterGenerator.annotations
+  kapt deps.adapterGenerator.processor
+
   implementation deps.android.arch.dbFramework
   implementation deps.android.arch.viewModel
   implementation deps.android.arch.room.runtime
@@ -55,6 +58,8 @@ dependencies {
   implementation deps.kotlin.coroutines.common
   implementation deps.kotlin.coroutines.jdk
   implementation deps.kotlin.coroutines.android
+
+  implementation deps.kotterknife
 
   implementation deps.dagger.runtime
   kapt deps.dagger.compiler
