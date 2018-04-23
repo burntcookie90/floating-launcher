@@ -10,7 +10,9 @@ import javax.inject.Singleton
 @Module
 class DbModule {
   @Provides @Singleton fun db(context: Context): AppInfoDatabase =
-      Room.databaseBuilder(context, AppInfoDatabase::class.java, "app-info").build()
+      Room.databaseBuilder(context, AppInfoDatabase::class.java, "AppInfo")
+          .fallbackToDestructiveMigration()
+          .build()
 
   @Provides @Singleton fun launcherDao(appInfoDatabase: AppInfoDatabase) = appInfoDatabase.appInfoDao()
 }
