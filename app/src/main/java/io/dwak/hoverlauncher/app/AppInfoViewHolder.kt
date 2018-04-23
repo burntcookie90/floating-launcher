@@ -5,6 +5,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import io.dwak.hoverlauncher.R
 import io.dwak.hoverlauncher.data.modifier.Modification
@@ -18,13 +19,14 @@ class AppInfoViewHolder(parent: ViewGroup,
                         private val modifier: io.dwak.hoverlauncher.data.modifier.Modifier)
   : RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_app_info, parent, false)) {
   private val appName: TextView by bindView(R.id.app_name)
+  private val appIcon: ImageView by bindView(R.id.app_icon)
 
   private lateinit var uiAppInfo: UiAppInfo
 
   init {
     itemView.setOnClickListener {
       launch(UI) {
-        if (showDeleteConfirmationDialog(itemView.context, uiAppInfo)) {
+        if (showDeleteConfirmationDialog(itemView.context, "Delete ${uiAppInfo}?")) {
           modifier.submit(Modification.DeleteAppInfo(uiAppInfo))
         }
       }
@@ -34,12 +36,15 @@ class AppInfoViewHolder(parent: ViewGroup,
   fun bind(uiAppInfo: UiAppInfo) {
     this.uiAppInfo = uiAppInfo
     appName.text = uiAppInfo.appName
+    val packageManager = itemView.context.packageManager
+    val icon = packageManager.getApplicationIcon(uiAppInfo.appId)
+    appIcon.setImageDrawable(icon)
   }
 
   private suspend fun showDeleteConfirmationDialog(context: Context,
-                                                   uiAppInfo: UiAppInfo) = suspendCoroutine<Boolean> {
+                                                   title: String) = suspendCoroutine<Boolean> {
     AlertDialog.Builder(context)
-        .setTitle("Delete ${uiAppInfo.appName}?")
+        .setTitle(title)
         .setPositiveButton("Yes", { _, _ -> it.resume(true) })
         .setNegativeButton("No", { _, _ -> it.resume(false) })
         .setCancelable(true)
