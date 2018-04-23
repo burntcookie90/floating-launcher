@@ -8,6 +8,8 @@ import javax.inject.Singleton
 @Module
 abstract class ActivityModule {
   @Singleton
-  @ContributesAndroidInjector(modules = [DbModule::class, ProviderModule::class, ViewModelModule::class])
+  @ContributesAndroidInjector(modules = [
+    DbModule::class, ModifierModule::class, ProviderModule::class, ViewModelModule::class
+  ])
   abstract fun contributeYourActivityInjector(): MainActivity
 }
