@@ -5,7 +5,7 @@ import android.arch.persistence.room.RoomDatabase
 import io.dwak.hoverlauncher.data.db.dao.AppInfoDao
 import io.dwak.hoverlauncher.data.db.model.DbAppInfo
 
-@Database(entities = [DbAppInfo::class], version = 1)
+@Database(entities = [DbAppInfo::class], version = 2)
 abstract class AppInfoDatabase : RoomDatabase(){
   abstract fun appInfoDao(): AppInfoDao
 }

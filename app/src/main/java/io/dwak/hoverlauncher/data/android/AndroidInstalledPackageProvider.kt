@@ -15,7 +15,7 @@ class AndroidInstalledPackageProvider @Inject constructor(private val context: C
             .map {
               ApiAppInfo(it.packageName,
                   it.loadLabel(packageManager).toString(),
-                  it.loadIcon(packageManager))
+                  it.icon)
             }
     )
   }

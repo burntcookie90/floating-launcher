@@ -1,11 +1,17 @@
 package io.dwak.hoverlauncher.data.db.dao
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import io.dwak.hoverlauncher.data.db.model.DbAppInfo
+import io.reactivex.Flowable
 
 @Dao
 interface AppInfoDao {
-  @Query("SELECT * from `app-info`")
-  fun getAll(): List<DbAppInfo>
+  @Query("SELECT * from appInfo")
+  fun getAll(): Flowable<List<DbAppInfo>>
+
+  @Insert(onConflict = OnConflictStrategy.IGNORE)
+  fun insert(dbAppInfo: DbAppInfo)
+
+  @Delete
+  fun delete(dbAppInfo: DbAppInfo)
 }
