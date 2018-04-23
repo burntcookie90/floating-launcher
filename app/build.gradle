@@ -46,6 +46,7 @@ dependencies {
   implementation deps.android.arch.dbFramework
   implementation deps.android.arch.viewModel
   implementation deps.android.arch.room.runtime
+  implementation deps.android.arch.room.rxjava
   kapt deps.android.arch.room.compiler
 
   implementation deps.android.support.compat
@@ -58,6 +59,7 @@ dependencies {
   implementation deps.kotlin.coroutines.common
   implementation deps.kotlin.coroutines.jdk
   implementation deps.kotlin.coroutines.android
+  implementation deps.kotlin.coroutines.rx2
 
   implementation deps.kotterknife
 
@@ -68,6 +70,9 @@ dependencies {
 
   implementation deps.hover
   implementation deps.timber
+  implementation deps.rxjava
+
+  implementation 'com.idescout.sql:sqlscout-server:4.0'
 
   testImplementation 'junit:junit:4.12'
   androidTestImplementation deps.android.test.runner
