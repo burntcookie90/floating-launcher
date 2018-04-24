@@ -33,16 +33,20 @@ class LauncherViewModel @Inject constructor(private val appInfoRepo: AppInfoRepo
   val appInfos: LiveData<List<UiAppInfo>> by Mutable(_mutableAppInfos)
   val installedAppInfos: LiveData<List<UiAppInfo>> by Mutable(_mutableInstalledAppInfo)
 
-  fun getAppsToLaunch() = launch {
-    val savedAppInfo = appInfoRepo.getSavedAppInfo()
-    for (event in savedAppInfo) {
-      _mutableAppInfos.postValue(event)
+  fun getAppsToLaunch() {
+    launch {
+      val savedAppInfo = appInfoRepo.getSavedAppInfo()
+      for (event in savedAppInfo) {
+        _mutableAppInfos.postValue(event)
+      }
     }
   }
 
   fun getInstalledApps() {
     launch {
-      val installedAppInfo = appInfoRepo.getInstalledAppInfo()
+      val installedAppInfo = appInfoRepo.getInstalledAppInfo().sortedBy {
+        it.appName
+      }
       _mutableInstalledAppInfo.postValue(installedAppInfo)
     }
   }
