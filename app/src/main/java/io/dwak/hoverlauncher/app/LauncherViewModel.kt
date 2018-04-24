@@ -3,6 +3,7 @@ package io.dwak.hoverlauncher.app
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import io.dwak.hoverlauncher.data.android.PreferenceProvider
 import io.dwak.hoverlauncher.data.modifier.Modification
 import io.dwak.hoverlauncher.data.modifier.Modifier
 import io.dwak.hoverlauncher.data.repo.AppInfoRepo
@@ -21,7 +22,9 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class LauncherViewModel @Inject constructor(private val appInfoRepo: AppInfoRepo,
-                                            private val modifier: Modifier) : ViewModel() {
+                                            private val modifier: Modifier,
+                                            private val preferenceProvider: PreferenceProvider)
+  : ViewModel(), PreferenceProvider by preferenceProvider {
 
   private val _mutableAppInfos: MutableLiveData<List<UiAppInfo>> by lazy {
     MutableLiveData<List<UiAppInfo>>()
@@ -37,7 +40,9 @@ class LauncherViewModel @Inject constructor(private val appInfoRepo: AppInfoRepo
     launch {
       val savedAppInfo = appInfoRepo.getSavedAppInfo()
       for (event in savedAppInfo) {
-        _mutableAppInfos.postValue(event)
+        _mutableAppInfos.postValue(event.sortedBy {
+          it.appName
+        })
       }
     }
   }
@@ -53,5 +58,9 @@ class LauncherViewModel @Inject constructor(private val appInfoRepo: AppInfoRepo
 
   fun saveAsAppToLaunch(uiAppInfo: UiAppInfo) {
     modifier.submit(Modification.SaveAppInfo(uiAppInfo))
+  }
+
+  fun deleteAppToLaunch(uiAppInfo: UiAppInfo) {
+    modifier.submit(Modification.DeleteAppInfo(uiAppInfo))
   }
 }

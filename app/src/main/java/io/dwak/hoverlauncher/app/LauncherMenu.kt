@@ -1,66 +1,35 @@
 package io.dwak.hoverlauncher.app
 
+import android.arch.lifecycle.LifecycleOwner
 import android.content.Context
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.View
 import android.widget.ImageView
 import io.dwak.hoverlauncher.R
-import io.mattcarroll.hover.Content
 import io.mattcarroll.hover.HoverMenu
 
 
-class LauncherMenu(private val launcherViewModel: LauncherViewModel, context: Context) :
-    HoverMenu() {
+class LauncherMenu(launcherViewModel: LauncherViewModel,
+                   context: Context,
+                   lifecycleOwner: LifecycleOwner,
+                   onClick: () -> Unit)
+  : HoverMenu() {
 
-  private val section: Section
-  private val packageManage = context.packageManager
-
-  init {
+  private val section: Section by lazy {
     launcherViewModel.getAppsToLaunch()
     val launcherIcon = ImageView(context).apply {
       setImageResource(R.drawable.ic_launch_white_24dp)
       scaleType = ImageView.ScaleType.CENTER_INSIDE
       setBackgroundResource(R.drawable.circle)
     }
-    section = Section(SectionId("1"), launcherIcon, object :
-        Content {
-      override fun getView(): View {
-        val wholeScreen = RecyclerView(context)
-        wholeScreen.setBackgroundColor(context.getColor(R.color.white))
-        wholeScreen.layoutManager = LinearLayoutManager(context)
-        val appInfoAdapter = AppInfoAdapter({
-          context.startActivity(packageManage.getLaunchIntentForPackage(it.appId))
-        })
-        wholeScreen.adapter = appInfoAdapter
-        launcherViewModel.appInfos.observeForever {
-          appInfoAdapter.submitList(it)
-        }
-        return wholeScreen
-      }
+    val sectionId = SectionId("1")
 
-      override fun onShown() = Unit
-
-      override fun onHidden() = Unit
-
-      override fun isFullscreen() = false
-    })
+    val content = HoverContent(context, launcherViewModel, lifecycleOwner, onClick)
+    Section(sectionId, launcherIcon, content)
   }
 
-  override fun getSections(): MutableList<Section> {
-    return mutableListOf(section)
-  }
-
+  override fun getSections() = mutableListOf(section)
   override fun getId(): String = "single-section-menu"
-
-  override fun getSection(index: Int): Section? {
-    return section
-  }
-
-  override fun getSection(sectionId: SectionId): Section? {
-    return section
-  }
-
+  override fun getSection(index: Int): Section? = section
+  override fun getSection(sectionId: SectionId): Section? = section
   override fun getSectionCount(): Int = 1
 
 }
