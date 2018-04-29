@@ -44,10 +44,10 @@ buildscript {
               'recyclerView': "com.android.support:recyclerview-v7:${versions.supportLibrary}",
               'appCompat': "com.android.support:appcompat-v7:${versions.supportLibrary}",
               'design': "com.android.support:design:${versions.supportLibrary}",
-              'constraintLayout': 'com.android.support.constraint:constraint-layout:1.1.0',
+              'constraintLayout': 'com.android.support.constraint:constraint-layout:1.1.0'
           ],
           'x': [
-              'coreKtx': 'androidx.core:core-ktx:0.3',
+              'coreKtx': 'androidx.core:core-ktx:0.3'
           ],
           'test': [
               'runner': "com.android.support.test:runner:${versions.atsl}",
