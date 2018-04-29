@@ -40,8 +40,6 @@ android {
 }
 
 dependencies {
-  implementation deps.adapterGenerator.annotations
-  kapt deps.adapterGenerator.processor
 
   implementation deps.android.arch.dbFramework
   implementation deps.android.arch.viewModel
