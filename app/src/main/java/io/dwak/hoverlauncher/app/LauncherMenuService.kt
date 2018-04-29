@@ -11,7 +11,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
 import dagger.android.AndroidInjection
 import io.mattcarroll.hover.HoverView
 import io.mattcarroll.hover.window.HoverMenuService

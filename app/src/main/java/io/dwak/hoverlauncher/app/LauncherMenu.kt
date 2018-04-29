@@ -22,7 +22,7 @@ class LauncherMenu(launcherViewModel: LauncherViewModel,
     }
     val sectionId = SectionId("1")
 
-    val content = HoverContent(context, launcherViewModel, lifecycleOwner, onClick)
+    val content = LauncherContent(context, launcherViewModel, lifecycleOwner, onClick)
     Section(sectionId, launcherIcon, content)
   }
 

@@ -10,10 +10,10 @@ import android.view.View
 import io.dwak.hoverlauncher.R
 import io.mattcarroll.hover.Content
 
-class HoverContent(private val context: Context,
-                   private val launcherViewModel: LauncherViewModel,
-                   private val lifecycleOwner: LifecycleOwner,
-                   private val onClick: () -> Unit) : Content {
+class LauncherContent(private val context: Context,
+                      private val launcherViewModel: LauncherViewModel,
+                      private val lifecycleOwner: LifecycleOwner,
+                      private val onClick: () -> Unit) : Content {
   private val packageManage = context.packageManager
 
   override fun getView(): View {

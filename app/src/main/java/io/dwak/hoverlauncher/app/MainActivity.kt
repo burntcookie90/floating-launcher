@@ -91,11 +91,15 @@ class MainActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.launch -> {
-        startService(Intent(this@MainActivity, LauncherMenuService::class.java))
+        launchHoverMenu()
         true
       }
       else -> super.onOptionsItemSelected(item)
     }
+  }
+
+  private fun launchHoverMenu() {
+    startService(Intent(this@MainActivity, LauncherMenuService::class.java))
   }
 
   private suspend fun showAppPicker(installedApps: List<UiAppInfo>) = suspendCancellableCoroutine<UiAppInfo> {
